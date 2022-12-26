@@ -1,0 +1,16 @@
+{
+  "name": "fp-ts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "aeolus.zhang <aeoluj@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@types/node": "^18.11.18",
+    "fp-ts": "^2.13.1"
+  }
+}
