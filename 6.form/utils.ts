@@ -2,7 +2,6 @@ import { fromPredicate, Either, match, chain, right } from 'fp-ts/Either';
 import { pipe } from 'fp-ts/function';
 export { Predicate } from 'fp-ts/lib/Predicate';
 import { every, map } from 'fp-ts/Array';
-import { Predicate } from 'fp-ts/lib/Predicate';
 
 export const validate = <T>(validators: Array<any>, errorMessage: string) => (value: T) => pipe(
     value,
@@ -46,16 +45,11 @@ export const validationCheck = (...p: (<T>() => (value: T) => Either<string, T>)
         )
     );
 }
-
 // 最小字符串长度为15,不足补齐
 function minStringlen(str: string, len: number) {
     return str.padEnd(len, ' ');
 }
-
-
-
-
-export const makeValidator = (validators: Array<any>, errorMessage: string)=>{
+export const makeValidator = (validators: Array<(val: any) => boolean>, errorMessage: string) => {
     return <T>() => validate<T>(validators, errorMessage);
 }
 
