@@ -1,8 +1,7 @@
-import { fromPredicate, Either, left, right, chain, match } from 'fp-ts/Either';
-import { pipe, identity } from 'fp-ts/function';
+import { fromPredicate, Either, chain, match } from 'fp-ts/Either';
+import { pipe } from 'fp-ts/function';
 import { Predicate } from 'fp-ts/lib/Predicate';
 import { every, map } from 'fp-ts/Array';
-import { string } from 'fp-ts';
 
 const validate = <T>(validators: Array<any>, errorMessage: string) => (value: T) => pipe(
     value,
