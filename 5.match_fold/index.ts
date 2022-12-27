@@ -1,5 +1,5 @@
 import { fromPredicate, match } from "fp-ts/lib/Option";
-import { pipe } from 'fp-ts/lib/function';
+import { identity, pipe } from 'fp-ts/lib/function';
 
 pipe(
     2,
