@@ -15,7 +15,10 @@ export const validate = <T>(validators: Array<any>, errorMessage: string) => (va
     ),
 );
 
-export const validationCheck = (...p: (<T>() => (value: T) => Either<string, T>)[]) => (value: string) => {
+export const validationCheck = (...p: (<T>() => (value: T) => Either<string, T>)[]) => (
+    resolve: Function = () => { },
+    reject: Function = () => { }
+) => (value: string) => {
     const [t0, ...tn] = p;
     let errorTips = 'default error message'
     return pipe(
@@ -34,20 +37,16 @@ export const validationCheck = (...p: (<T>() => (value: T) => Either<string, T>)
             () => errorTips,
         )),
         match(
-            (val) => {
-                console.log(`${minStringlen(value, 20)}❌:`, val);
+            (msg) => {
+                reject(value, msg);
                 return false
             },
             (val) => {
-                console.log(`${minStringlen(value, 20)}✅:`, val);
+                resolve(val);
                 return true
             },
         )
     );
-}
-// 最小字符串长度为15,不足补齐
-function minStringlen(str: string, len: number) {
-    return str.padEnd(len, ' ');
 }
 export const makeValidator = (validators: Array<(val: any) => boolean>, errorMessage: string) => {
     return <T>() => validate<T>(validators, errorMessage);
