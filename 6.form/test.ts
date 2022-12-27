@@ -16,45 +16,11 @@ export const validate = <T>(validators: Array<any>, errorMessage: string) => (va
     ),
 );
 
-export const check = <T>(val: T) => (valid: (...val: any[]) => Either<string, T>, otherValids: ((...val: any[]) => Either<string, T>)[]) => (
-    errFunc: (msg: string) => boolean = () => false,
-    successFunc: () => boolean = () => true,
-): boolean => {
-    const ov = chain(otherValids[0]);
-
-    return pipe(
-        val,
-        valid,
-        ov,
-        match(
-            errFunc,
-            successFunc,
-        ),
-    );
-};
-
-const startWith = (search: string): Predicate<string> => (value: string): boolean => value.startsWith(search);
-
-const minLength = (length: number): Predicate<string> => (value: string): boolean => value.length >= length;
-
-const maxLength = (length: number): Predicate<string> => (value: string): boolean => value.length <= length;
-
-const testPhoneNumberPattern = (value: string): boolean => {
-    const pattern = /^\+?[0-9]{8,15}$/;
-    return pattern.test(value);
-};
-
-const sum = (a: number, b: number) => a + b;
-const v1 = <T>() => validate<T>([minLength(1)], 'phone number must not be empty');
-const v2 = <T>() => validate<T>([startWith('+')], '前面请带加号');
-const v3 = <T>() => validate<T>([minLength(8), maxLength(15)], '长度在8-15之间');
-const v4 = <T>() => validate<T>([testPhoneNumberPattern], '格式不正确，请输入正确的数字');
-
-const validatePhoneNumber = <T>(phoneNumber: string, ...p: (<T>() => (value: T) => Either<string, T>)[]) => {
+const validationCheck = (...p: (<T>() => (value: T) => Either<string, T>)[]) => (value: string) => {
     const [t0, ...tn] = p;
     let errorTips = 'default error message'
     return pipe(
-        phoneNumber,
+        value,
         t0(),
         chain(fromPredicate(
             val => pipe(
@@ -70,11 +36,11 @@ const validatePhoneNumber = <T>(phoneNumber: string, ...p: (<T>() => (value: T) 
         )),
         match(
             (val) => {
-                console.log(`${minStringlen(phoneNumber, 20)}❌:`, val);
+                console.log(`${minStringlen(value, 20)}❌:`, val);
                 return false
             },
             (val) => {
-                console.log(`${minStringlen(phoneNumber, 20)}✅:`, val);
+                console.log(`${minStringlen(value, 20)}✅:`, val);
                 return true
             },
         )
@@ -86,10 +52,34 @@ function minStringlen(str: string, len: number) {
     return str.padEnd(len, ' ');
 }
 
-validatePhoneNumber('+123456789', v1, v2, v3); // right
-validatePhoneNumber('123456789', v1, v2, v3);  // left 前面没有加号
-validatePhoneNumber('+12', v1, v2, v3);      // left 长度不对
-validatePhoneNumber('', v1, v2, v3);        // left 为空
-validatePhoneNumber('+12345678asdfsfasf9', v1, v2, v3);    // left 长度不对
-validatePhoneNumber('+abcasdfasd', v1, v2, v3, v4);   // left 格式不正确
-validatePhoneNumber('123456789', v2); // right
+
+
+const startWith = (search: string): Predicate<string> => (value: string): boolean => value.startsWith(search);
+
+const minLength = (length: number): Predicate<string> => (value: string): boolean => value.length >= length;
+
+const maxLength = (length: number): Predicate<string> => (value: string): boolean => value.length <= length;
+
+const testPhoneNumberPattern = (value: string): boolean => {
+    const pattern = /^\+?[0-9]{8,15}$/;
+    return pattern.test(value);
+};
+
+const makeValidator = (validators: Array<any>, errorMessage: string)=>{
+    return <T>() => validate<T>(validators, errorMessage);
+}
+
+const v1 = makeValidator([minLength(1)], 'phone number must not be empty');
+const v2 = makeValidator([startWith('+')], '前面请带加号');
+const v3 = makeValidator([minLength(8), maxLength(15)], '长度在8-15之间');
+const v4 = makeValidator([testPhoneNumberPattern], '格式不正确，请输入正确的数字');
+
+const phoneNumberCheck = validationCheck(v1, v2, v3, v4);
+
+phoneNumberCheck('+123456789'); // right
+phoneNumberCheck('123456789');  // left 前面没有加号
+phoneNumberCheck('+12');      // left 长度不对
+phoneNumberCheck('');        // left 为空
+phoneNumberCheck('+12345678asdfsfasf9');    // left 长度不对
+phoneNumberCheck('+abcasdfasd');   // left 格式不正确
+phoneNumberCheck('123456789'); // right
