@@ -1,13 +1,12 @@
 import { identity, pipe } from 'fp-ts/function';
 import { fromNullable, map, match } from 'fp-ts/lib/Option';
 
+const conjoin = (flock_x: number) => (flock_y: number) => { return flock_x + flock_y };
+const breed = (flock_x: number) => (flock_y: number) => { return flock_x * flock_y };
 
-var conjoin = (flock_x: number) => (flock_y: number) => { return flock_x + flock_y };
-var breed = (flock_x: number) => (flock_y: number) => { return flock_x * flock_y };
-
-var flock_a = 4;
-var flock_b = 2;
-var flock_c = 0;
+const flock_a = 4;
+const flock_b = 2;
+const flock_c = 0;
 
 // var result = conjoin(breed(flock_b, conjoin(flock_a, flock_c)), breed(flock_a, flock_b));
 

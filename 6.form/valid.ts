@@ -16,6 +16,7 @@ const v1 = makeValidator([minLength(1)], 'phone number must not be empty');
 const v2 = makeValidator([startWith('+')], '前面请带加号');
 const v3 = makeValidator([minLength(8), maxLength(15)], '长度在8-15之间');
 const v4 = makeValidator([testPhoneNumberPattern], '格式不正确，请输入正确的数字');
+
 const resolve = (val: string) => {
     console.log(`${minStringlen(val, 20)}✅:`, val);
 };

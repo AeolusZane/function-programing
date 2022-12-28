@@ -41,6 +41,7 @@ console.log(v1);
 // len([]) == 0
 // len(fx(x:xs)) == 1 + len(xs)
 
+// list can be any type, not just number
 const len = (list: number[]): number => {
     if (list.length === 0) {
         return 0;
@@ -52,5 +53,9 @@ const len = (list: number[]): number => {
 console.log(len(v1));
 
 /**
- * no loops
+ * · no loops,just recursion
+ * · no side effects, 相同参数总是产生相同结果, called refferential transparency
+ * · polymorphic type system(泛型来自于函数式编程)
+ * · 内存管理是自动完成的，不像c一类的语言需要手动释放内存
+ * · 函数式编程的函数是一等公民，可以作为参数传递，也可以作为返回值
  */
