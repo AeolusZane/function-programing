@@ -4,4 +4,6 @@ need ts-node
 
 npm install
 
-[youtube link](https://www.youtube.com/watch?v=IqdvgzV_nms)
+[jsconf link](https://www.youtube.com/watch?v=IqdvgzV_nms)
+
+[course link](https://www.youtube.com/watch?v=bXM5wfQsPn0&list=PLA_-EWSPTJcu4i7RFCl_KeGrrz37C4_Oc&index=2)
