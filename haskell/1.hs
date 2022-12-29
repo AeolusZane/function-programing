@@ -1,5 +1,5 @@
-square :: Int -> Int -> Int
-square x y = x + y
+square :: Int -> Int
+square x = x * x
 
 main = do
-    print(square 1 3)
+    print(square (12 - 1) ) -- minus first or square ??

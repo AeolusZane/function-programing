@@ -19,3 +19,4 @@ const non_term = (x: number): any => {
 }
 
 console.log(three(non_term(0)));
+
