@@ -8,4 +8,4 @@ npm install
 
 [course link](https://www.youtube.com/watch?v=bXM5wfQsPn0&list=PLA_-EWSPTJcu4i7RFCl_KeGrrz37C4_Oc&index=2)
 
-[haskell online compiler](https://www.tutorialspoint.com/compile_haskell_online.php)
+[haskell online compiler](https://www.onlinegdb.com/online_haskell_compiler)
